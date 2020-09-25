@@ -2,26 +2,30 @@ package com.example.testeapp.view
 
 import android.content.Context
 import android.content.DialogInterface
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testeapp.R
 import com.example.testeapp.model.TodoData
+import com.example.testeapp.viewmodel.MainViewModel
 
 
 class AdapterTodo(val dataList: ArrayList<TodoData>) :
     RecyclerView.Adapter<AdapterTodo.HolderData>() {
 
-    interface OnItemLongClickListener {
-        fun onItemLongClicked(position: Int): Boolean
+    companion object{
+        var pos = 0
     }
+
+    var mteste = MainViewModel()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -35,16 +39,26 @@ class AdapterTodo(val dataList: ArrayList<TodoData>) :
         val data = dataList[position]
         holder.txTarefa.text = data.tarefa
         holder.txDesc.text = (data.desc)
-        holder.txTarefa.setOnLongClickListener {
+        holder.lay.setOnLongClickListener {
             dialog(it.context, holder)
             true
         }
 
-        holder.txDesc.setOnLongClickListener {
-            dialog(it.context, holder)
-            true
+        holder.lay.setOnClickListener {
+            if (data.del == false) {
+                data.done = !data.done
+                holder.check.visibility = if (data.done) View.VISIBLE else View.INVISIBLE
+            } else {
+                pos = position
+                Toast.makeText(it.context, "Remover elemento na posição" + position, Toast.LENGTH_LONG).show()
+            }
+
         }
-        holder.txDesc.setOnClickListener { holder.lay.setBackgroundColor(Color.parseColor("#C6A0FD")) }
+
+//        if (data.del == true){
+//            holder.del.visibility = View.VISIBLE
+//        } else holder.del.visibility = View.INVISIBLE
+        holder.del.visibility = if (data.del) View.VISIBLE else View.INVISIBLE
 
 
     }
@@ -57,16 +71,19 @@ class AdapterTodo(val dataList: ArrayList<TodoData>) :
         val txTarefa = v.findViewById<TextView>(R.id.rv_tarefa)
         val txDesc = v.findViewById<TextView>(R.id.rv_desc)
         val lay = v.findViewById<ConstraintLayout>(R.id.rv_const)
+        val check = v.findViewById<ImageView>(R.id.img_check)
+        val del = v.findViewById<ImageView>(R.id.img_del)
     }
 
     fun dialog(context: Context, holder: HolderData) {
         val dialog = AlertDialog.Builder(context)
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_add, null)
+        dialog.setTitle("Alterar Tarefa")
         dialog.setView(view)
         val tarefa = view.findViewById<EditText>(R.id.edt_tarefa_todo)
         val desc = view.findViewById<EditText>(R.id.edt_desc_todo)
-        dialog.setPositiveButton("Alterar") { _: DialogInterface, _: Int ->
-            if (tarefa.text.isNotEmpty() && desc.text.isNotEmpty()){
+        dialog.setPositiveButton(context.getString(R.string.change)) { _: DialogInterface, _: Int ->
+            if (tarefa.text.isNotEmpty() && desc.text.isNotEmpty()) {
                 holder.txTarefa.text = tarefa.text
                 holder.txDesc.text = desc.text
             } else {

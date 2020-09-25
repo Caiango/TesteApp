@@ -12,9 +12,12 @@ public class TodosRoom {
 
     private String desc;
 
-    public TodosRoom(String tarefa, String desc) {
+    private boolean done;
+
+    public TodosRoom(String tarefa, String desc, boolean done) {
         this.tarefa = tarefa;
         this.desc = desc;
+        this.done = done;
     }
 
     public void setId(int id) {
@@ -31,5 +34,9 @@ public class TodosRoom {
 
     public String getDesc() {
         return desc;
+    }
+
+    public boolean isDone() {
+        return done;
     }
 }

@@ -1,3 +1,3 @@
 package com.example.testeapp.model
 
-class TodoData(val tarefa: String, val desc: String)
+class TodoData(var tarefa: String, var desc: String, var done: Boolean, var del: Boolean)
