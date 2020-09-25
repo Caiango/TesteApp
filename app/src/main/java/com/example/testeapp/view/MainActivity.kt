@@ -1,18 +1,22 @@
 package com.example.testeapp.view
 
 import android.os.Bundle
-import android.view.View
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testeapp.R
 import com.example.testeapp.viewmodel.MainViewModel
+import com.example.testeapp.viewmodel.TodosViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.rv_lay.*
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mMainViewModel: MainViewModel
+
+    private lateinit var mTodosViewModel: TodosViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +25,21 @@ class MainActivity : AppCompatActivity() {
 
         mMainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        mMainViewModel.add()
+        mTodosViewModel = ViewModelProvider(this).get(TodosViewModel::class.java)
+
+        try {
+
+
+            mTodosViewModel!!.allTodo.observe(this, {
+                //Update Recycler view
+                Toast.makeText(applicationContext, "OnChanged", Toast.LENGTH_LONG).show()
+            })
+        }catch (e: Exception){
+            Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_LONG).show()
+            Log.e("Errooo", e.toString())
+        }
+
+        mMainViewModel.add(rv_main)
 
         actionBtnDel.setOnClickListener{
             mMainViewModel.iconDel(rv_main)
@@ -35,5 +53,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
 
 }

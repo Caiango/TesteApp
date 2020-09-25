@@ -20,7 +20,8 @@ class MainViewModel : ViewModel() {
 
 
     //adicionar tarefa na lista
-    fun add() {
+    fun add(v: RecyclerView) {
+        lista.clear()
         var tarefa1 = TodoData("Estudar SQLite", "Aprender como implementar o SQLite", false, false)
         var tarefa2 =
             TodoData(
@@ -37,6 +38,8 @@ class MainViewModel : ViewModel() {
         lista.add(tarefa1)
         lista.add(tarefa2)
         lista.add(tarefa3)
+
+        v.adapter = AdapterTodo(lista)
     }
 
     //chamar dialog de add tarefa
@@ -48,10 +51,15 @@ class MainViewModel : ViewModel() {
         val tarefa = view.findViewById<EditText>(R.id.edt_tarefa_todo)
         val desc = view.findViewById<EditText>(R.id.edt_desc_todo)
         dialog.setPositiveButton("Adicionar") { _: DialogInterface, _: Int ->
-            var add = TodoData(tarefa.text.toString(), desc.text.toString(), false, false)
-            lista.add(add)
-            // lista.reverse()
-            v.adapter = AdapterTodo(lista)
+            if (tarefa.text.isNotEmpty() && desc.text.isNotEmpty()) {
+                var add = TodoData(tarefa.text.toString(), desc.text.toString(), false, false)
+                lista.add(add)
+                // lista.reverse()
+                v.adapter = AdapterTodo(lista)
+            } else {
+                Toast.makeText(context, "Preencha os valores", Toast.LENGTH_LONG).show()
+            }
+
         }
         dialog.setNegativeButton("Cancelar") { dialogInterface: DialogInterface, i: Int ->
             Toast.makeText(context, "Cancelado", Toast.LENGTH_SHORT).show()
