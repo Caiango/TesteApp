@@ -11,21 +11,17 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testeapp.R
 import com.example.testeapp.model.TodoData
-import com.example.testeapp.viewmodel.MainViewModel
 
 
 class AdapterTodo(val dataList: ArrayList<TodoData>) :
     RecyclerView.Adapter<AdapterTodo.HolderData>() {
 
-    companion object{
+    companion object {
         var pos = 0
     }
-
-    var mteste = MainViewModel()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -39,25 +35,32 @@ class AdapterTodo(val dataList: ArrayList<TodoData>) :
         val data = dataList[position]
         holder.txTarefa.text = data.tarefa
         holder.txDesc.text = (data.desc)
+
+        //click longo responsável por alterar o valor da view selecionada
         holder.lay.setOnLongClickListener {
             dialog(it.context, holder)
             true
         }
 
+        //click responsável por setta visibilidade ao check da task
         holder.lay.setOnClickListener {
+            //se del for falso
             if (data.del == false) {
+                //done vai receber o oposto
                 data.done = !data.done
                 holder.check.visibility = if (data.done) View.VISIBLE else View.INVISIBLE
             } else {
                 pos = position
-                Toast.makeText(it.context, "Remover elemento na posição" + position, Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    it.context,
+                    "Remover elemento na posição" + position,
+                    Toast.LENGTH_LONG
+                ).show()
             }
 
         }
 
-//        if (data.del == true){
-//            holder.del.visibility = View.VISIBLE
-//        } else holder.del.visibility = View.INVISIBLE
+        // del visibility, se for verdadeiro fica visívivel...
         holder.del.visibility = if (data.del) View.VISIBLE else View.INVISIBLE
 
 
@@ -75,6 +78,7 @@ class AdapterTodo(val dataList: ArrayList<TodoData>) :
         val del = v.findViewById<ImageView>(R.id.img_del)
     }
 
+    //função responsável por chamar dialog de alteração
     fun dialog(context: Context, holder: HolderData) {
         val dialog = AlertDialog.Builder(context)
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_add, null)
