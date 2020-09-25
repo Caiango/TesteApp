@@ -8,9 +8,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testeapp.AdapterTodo
+import com.example.testeapp.view.AdapterTodo
 import com.example.testeapp.R
-import com.example.testeapp.TodoData
+import com.example.testeapp.model.TodoData
 
 
 class MainViewModel : ViewModel() {
@@ -37,7 +37,7 @@ class MainViewModel : ViewModel() {
         dialog.setView(view)
         val tarefa = view.findViewById<EditText>(R.id.edt_tarefa_todo)
         val desc = view.findViewById<EditText>(R.id.edt_desc_todo)
-        dialog.setPositiveButton("Alterar") { _: DialogInterface, _: Int ->
+        dialog.setPositiveButton("Adicionar") { _: DialogInterface, _: Int ->
             var add = TodoData(tarefa.text.toString(), desc.text.toString())
             lista.add(add)
             v.adapter = AdapterTodo(lista)

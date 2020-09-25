@@ -1,31 +1,31 @@
-package com.example.testeapp
+package com.example.testeapp.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.testeapp.R
 import com.example.testeapp.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var MainViewModel: MainViewModel
+    private lateinit var mMainViewModel: MainViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        MainViewModel = MainViewModel()
+        mMainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-
-        MainViewModel.add()
+        mMainViewModel.add()
 
         rv_main.layoutManager = LinearLayoutManager(this)
 
-
         actionBtnAdd.setOnClickListener {
 
-            MainViewModel.dialog(this, rv_main)
+            mMainViewModel.dialog(this, rv_main)
         }
 
     }

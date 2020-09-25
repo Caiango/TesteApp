@@ -1,7 +1,8 @@
-package com.example.testeapp
+package com.example.testeapp.view
 
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +10,10 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.testeapp.R
+import com.example.testeapp.model.TodoData
 
 
 class AdapterTodo(val dataList: ArrayList<TodoData>) :
@@ -41,6 +44,8 @@ class AdapterTodo(val dataList: ArrayList<TodoData>) :
             dialog(it.context, holder)
             true
         }
+        holder.txDesc.setOnClickListener { holder.lay.setBackgroundColor(Color.parseColor("#C6A0FD")) }
+
 
     }
 
@@ -51,6 +56,7 @@ class AdapterTodo(val dataList: ArrayList<TodoData>) :
     class HolderData(v: View) : RecyclerView.ViewHolder(v) {
         val txTarefa = v.findViewById<TextView>(R.id.rv_tarefa)
         val txDesc = v.findViewById<TextView>(R.id.rv_desc)
+        val lay = v.findViewById<ConstraintLayout>(R.id.rv_const)
     }
 
     fun dialog(context: Context, holder: HolderData) {
@@ -60,8 +66,13 @@ class AdapterTodo(val dataList: ArrayList<TodoData>) :
         val tarefa = view.findViewById<EditText>(R.id.edt_tarefa_todo)
         val desc = view.findViewById<EditText>(R.id.edt_desc_todo)
         dialog.setPositiveButton("Alterar") { _: DialogInterface, _: Int ->
-            holder.txTarefa.text = tarefa.text
-            holder.txDesc.text = desc.text
+            if (tarefa.text.isNotEmpty() && desc.text.isNotEmpty()){
+                holder.txTarefa.text = tarefa.text
+                holder.txDesc.text = desc.text
+            } else {
+                Toast.makeText(context, "Preencha os valores", Toast.LENGTH_LONG).show()
+            }
+
         }
         dialog.setNegativeButton("Cancelar") { dialogInterface: DialogInterface, i: Int ->
             Toast.makeText(context, "Cancelado", Toast.LENGTH_SHORT).show()

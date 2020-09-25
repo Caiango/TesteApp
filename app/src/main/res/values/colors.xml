@@ -3,5 +3,6 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#9C5AFB</color>
+    <color name="selRecycler">#C6A0FD</color>
     <color name="colorBack">#6200EE</color>
 </resources>

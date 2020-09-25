@@ -43,6 +43,9 @@ dependencies {
     implementation 'com.github.alorma:github-sdk:3.2.5'
     implementation 'com.google.firebase:firebase-auth:19.4.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    def room_version = "2.2.5"
 
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 
 }
