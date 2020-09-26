@@ -3,6 +3,8 @@ package com.example.testeapp.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.List;
+
 @Entity(tableName = "todos_table")
 public class TodosRoom {
     @PrimaryKey(autoGenerate = true)
@@ -46,4 +48,5 @@ public class TodosRoom {
     public boolean isDel() {
         return del;
     }
+
 }

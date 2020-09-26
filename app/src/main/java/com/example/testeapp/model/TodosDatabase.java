@@ -44,9 +44,9 @@ public abstract class TodosDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            todosDao.insert(new TodosRoom("Tarefa 1", "Descrição 1", false, false));
-            todosDao.insert(new TodosRoom("Tarefa 2", "Descrição 2", false, false));
-            todosDao.insert(new TodosRoom("Tarefa 3", "Descrição 3", false, false));
+            todosDao.insert(new TodosRoom("Rooms App", "Finalizar Banco App", false, false));
+            todosDao.insert(new TodosRoom("Check e Delete", "Funcionalidades de Check e Delete", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
             return null;
         }
     }
