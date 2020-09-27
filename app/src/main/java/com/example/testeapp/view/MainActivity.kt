@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity(), AdapterTodo.onLongClickListener,
 
         mTodosViewModel = ViewModelProvider(this).get(TodosViewModel::class.java)
 
+        //obersavando alterações na lista e atualizando no adapter da RecyclerView
         mTodosViewModel.allTodo.observe(this,
             Observer<List<TodosRoom?>?> { todosRooms ->
                 adapter.setTodos(todosRooms)
@@ -117,9 +118,9 @@ class MainActivity : AppCompatActivity(), AdapterTodo.onLongClickListener,
         val desc = view.findViewById<EditText>(R.id.edt_desc_todo)
         tarefa.setText(item.tarefa)
         desc.setText(item.desc)
-        dialog.setPositiveButton(this.getString(R.string.change)) { _: DialogInterface, _: Int ->
+        dialog.setPositiveButton(this.getString(R.string.alterarDialog)) { _: DialogInterface, _: Int ->
             if (tarefa.text.isNotEmpty() && desc.text.isNotEmpty()) {
-                var teste =
+                val teste =
                     TodosRoom(tarefa.text.toString(), desc.text.toString(), item.isDone, item.isDel)
                 teste.id = item.id
                 // mTodosViewModel.delete(item)

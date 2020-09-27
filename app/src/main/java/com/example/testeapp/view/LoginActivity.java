@@ -1,56 +1,55 @@
 package com.example.testeapp.view;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.text.Html;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.testeapp.R;
-import com.example.testeapp.model.TodosRoom;
-import com.example.testeapp.viewmodel.TodosViewModel;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FacebookAuthProvider;
-import com.google.firebase.auth.GithubAuthProvider;
 
-import java.util.List;
-
-public class LoginActivity extends AppCompatActivity {
-//    private TodosViewModel mTodosViewModel;
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+    TextView myRepo;
+    Button login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-//        mTodosViewModel.getAllTodo().observe(this, new Observer<List<TodosRoom>>(){
+        TextView txGreeting = findViewById(R.id.txGreetings);
+        myRepo = findViewById(R.id.txMyRepo);
+        login = findViewById(R.id.btnLogin);
 //
-//            @Override
-//            public void onChanged(List<TodosRoom> todosRooms) {
-//
-//            }
-//        });
+//        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/login/oauth/authorize" + "?client_id=" + getString(R.string.github_app_id) + "&scope=repo&redirect_uri" + getString(R.string.github_app_url)));
+//        startActivity(intent);
+
+        String string = "Olá! Sou " + "<b>" + getString(R.string.myName) + "</b>" + " e esse é meu aplicativo referente ao teste!";
+
+        myRepo.setOnClickListener(this);
+        login.setOnClickListener(this);
+
+        txGreeting.setText(Html.fromHtml(string));
 
 
     }
 
-    private void accessGitHubToken(String accessToken) {
-        accessLoginData(
-                "github",
-                accessToken
-        );
-    }
-
-    private void accessLoginData(String provider, String... tokens) {
-        if (tokens != null && tokens.length > 0 && tokens[0] != null) {
-            AuthCredential credential = FacebookAuthProvider.getCredential(tokens[0]);
-            credential = provider.equalsIgnoreCase("github") ? GithubAuthProvider.getCredential(tokens[0]) : credential;
-
+    @Override
+    public void onClick(View view) {
+        if (view == myRepo) {
+            String url = myRepo.getText().toString();
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+        } else if (view == login) {
+            Toast.makeText(this, "Realizar Login", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public void sendLoginGitHubData(View view) {
-
     }
 }
