@@ -6,13 +6,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testeapp.R
 import com.example.testeapp.model.TodosRoom
 
 
-class AdapterTodo(var clickListener: onLongClickListener) :
+class AdapterTodo(var longClickListener: onLongClickListener, var clickListener: onClickListener) :
     RecyclerView.Adapter<AdapterTodo.HolderData>() {
 
     var dataList: List<TodosRoom> = ArrayList()
@@ -30,37 +29,12 @@ class AdapterTodo(var clickListener: onLongClickListener) :
         holder.txTarefa.text = data.tarefa
         holder.txDesc.text = data.desc
 
-        //click longo responsável por alterar o valor da view selecionada
-//        holder.lay.setOnLongClickListener {
-//            dialogUpdate(it.context, holder)
-//            true
-//        }
-
-        var done = data.isDone
-        //click responsável por setta visibilidade ao check da task
-        holder.lay.setOnClickListener {
-            //se del for falso
-            if (data.isDel == false) {
-                //done vai receber o oposto
-                done = !done
-                //fazer update para isDone = false
-
-                holder.check.visibility = if (done) View.VISIBLE else View.INVISIBLE
-            } else {
-                Toast.makeText(
-                    it.context,
-                    "Remover elemento na posição" + position,
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-
-        }
-
-        // del visibility, se for verdadeiro fica visívivel...
+        // img_del visibility, se isDel for verdadeiro fica visívivel...
         holder.del.visibility = if (data.isDel) View.VISIBLE else View.INVISIBLE
 
-        holder.initialize(dataList[position], clickListener)
-
+        //chamando funções de click
+        holder.initializeLong(dataList[position], longClickListener)
+        holder.initializeClick(dataList[position], clickListener)
 
     }
 
@@ -71,19 +45,37 @@ class AdapterTodo(var clickListener: onLongClickListener) :
     class HolderData(v: View) : RecyclerView.ViewHolder(v) {
         val txTarefa = v.findViewById<TextView>(R.id.rv_tarefa)
         val txDesc = v.findViewById<TextView>(R.id.rv_desc)
-        val lay = v.findViewById<ConstraintLayout>(R.id.rv_const)
         val check = v.findViewById<ImageView>(R.id.img_check)
         val del = v.findViewById<ImageView>(R.id.img_del)
 
-        fun initialize(item: TodosRoom, action: onLongClickListener) {
+        fun initializeLong(item: TodosRoom, action: onLongClickListener) {
 
             itemView.setOnLongClickListener {
                 action.onLongItemClick(item, adapterPosition)
                 true
             }
+
+        }
+
+        fun initializeClick(item: TodosRoom, action: onClickListener) {
+            var done = item.isDone
+            itemView.setOnClickListener {
+                action.onItemClick(item, adapterPosition)
+
+                //se del for falso
+                if (item.isDel == false) {
+                    //done vai receber o oposto
+                    done = !done
+                    //fazer update para isDone = false
+
+                    check.visibility = if (done) View.VISIBLE else View.INVISIBLE
+                }
+
+            }
         }
     }
 
+    //setar lista no adapter
     fun setTodos(todos: List<TodosRoom?>) {
         dataList = todos as List<TodosRoom>
         notifyDataSetChanged()
@@ -94,5 +86,12 @@ class AdapterTodo(var clickListener: onLongClickListener) :
 
         }
     }
+
+    interface onClickListener {
+        fun onItemClick(item: TodosRoom, position: Int) {
+
+        }
+    }
+
 
 }

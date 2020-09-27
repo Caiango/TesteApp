@@ -29,6 +29,10 @@ public class TodosRoom {
         this.id = id;
     }
 
+    public void setDel(boolean del) {
+        this.del = del;
+    }
+
     public int getId() {
         return id;
     }

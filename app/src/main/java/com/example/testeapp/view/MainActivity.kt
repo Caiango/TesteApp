@@ -4,6 +4,8 @@ package com.example.testeapp.view
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.Adapter
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -15,9 +17,10 @@ import com.example.testeapp.R
 import com.example.testeapp.model.TodosRoom
 import com.example.testeapp.viewmodel.TodosViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.rv_lay.*
 
-class MainActivity : AppCompatActivity(), AdapterTodo.onLongClickListener {
-    var adapter = AdapterTodo(this)
+class MainActivity : AppCompatActivity(), AdapterTodo.onLongClickListener,
+    AdapterTodo.onClickListener {
 
     private lateinit var mTodosViewModel: TodosViewModel
 
@@ -25,7 +28,7 @@ class MainActivity : AppCompatActivity(), AdapterTodo.onLongClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var adapter = AdapterTodo(this)
+        var adapter = AdapterTodo(this, this)
 
         rv_main.layoutManager = LinearLayoutManager(this)
         rv_main.setHasFixedSize(true)
@@ -37,13 +40,12 @@ class MainActivity : AppCompatActivity(), AdapterTodo.onLongClickListener {
             Observer<List<TodosRoom?>?> { todosRooms -> adapter.setTodos(todosRooms) })
 
         actionBtnDel.setOnClickListener {
-            Toast.makeText(this, "Excluir Algo", Toast.LENGTH_LONG).show()
+            mTodosViewModel.deleteAllTodo()
         }
 
         actionBtnAdd.setOnClickListener {
             dialogAdd()
         }
-
 
     }
 
@@ -81,6 +83,7 @@ class MainActivity : AppCompatActivity(), AdapterTodo.onLongClickListener {
         dialog.show()
     }
 
+    //função click longo RecyclerView para alterar item selecionado
     override fun onLongItemClick(item: TodosRoom, position: Int) {
         val dialog = AlertDialog.Builder(this)
         val view = LayoutInflater.from(this).inflate(R.layout.dialog_add, null)
@@ -88,9 +91,12 @@ class MainActivity : AppCompatActivity(), AdapterTodo.onLongClickListener {
         dialog.setView(view)
         val tarefa = view.findViewById<EditText>(R.id.edt_tarefa_todo)
         val desc = view.findViewById<EditText>(R.id.edt_desc_todo)
+        tarefa.setText(item.tarefa)
+        desc.setText(item.desc)
         dialog.setPositiveButton(this.getString(R.string.change)) { _: DialogInterface, _: Int ->
             if (tarefa.text.isNotEmpty() && desc.text.isNotEmpty()) {
-                var teste = TodosRoom(tarefa.text.toString(), desc.text.toString(), item.isDone, item.isDel)
+                var teste =
+                    TodosRoom(tarefa.text.toString(), desc.text.toString(), item.isDone, item.isDel)
                 teste.id = item.id
                 // mTodosViewModel.delete(item)
                 mTodosViewModel.update(teste)
@@ -106,5 +112,14 @@ class MainActivity : AppCompatActivity(), AdapterTodo.onLongClickListener {
         dialog.show()
 
     }
+
+    //função click RecyclerView para deletar o item selecionado
+    override fun onItemClick(item: TodosRoom, position: Int) {
+
+        //item.isDel = true
+        if (item.isDel == true) mTodosViewModel.delete(item)
+
+    }
+
 
 }
