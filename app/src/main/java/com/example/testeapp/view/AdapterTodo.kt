@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testeapp.R
 import com.example.testeapp.model.TodosRoom
@@ -31,6 +30,7 @@ class AdapterTodo(var longClickListener: onLongClickListener, var clickListener:
 
         // img_del visibility, se isDel for verdadeiro fica visívivel...
         holder.del.visibility = if (data.isDel) View.VISIBLE else View.INVISIBLE
+        holder.check.visibility = if (data.isDone) View.VISIBLE else View.INVISIBLE
 
         //chamando funções de click
         holder.initializeLong(dataList[position], longClickListener)
@@ -58,19 +58,9 @@ class AdapterTodo(var longClickListener: onLongClickListener, var clickListener:
         }
 
         fun initializeClick(item: TodosRoom, action: onClickListener) {
-            var done = item.isDone
+
             itemView.setOnClickListener {
                 action.onItemClick(item, adapterPosition)
-
-                //se del for falso
-                if (item.isDel == false) {
-                    //done vai receber o oposto
-                    done = !done
-                    //fazer update para isDone = false
-
-                    check.visibility = if (done) View.VISIBLE else View.INVISIBLE
-                }
-
             }
         }
     }

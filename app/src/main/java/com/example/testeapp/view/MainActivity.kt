@@ -1,11 +1,9 @@
 package com.example.testeapp.view
 
-//import com.example.testeapp.viewmodel.MainViewModel
+
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
-import android.widget.Adapter
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -17,12 +15,12 @@ import com.example.testeapp.R
 import com.example.testeapp.model.TodosRoom
 import com.example.testeapp.viewmodel.TodosViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.rv_lay.*
 
 class MainActivity : AppCompatActivity(), AdapterTodo.onLongClickListener,
     AdapterTodo.onClickListener {
 
     private lateinit var mTodosViewModel: TodosViewModel
+    private var listTodos: List<TodosRoom?>? = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +35,36 @@ class MainActivity : AppCompatActivity(), AdapterTodo.onLongClickListener,
         mTodosViewModel = ViewModelProvider(this).get(TodosViewModel::class.java)
 
         mTodosViewModel.allTodo.observe(this,
-            Observer<List<TodosRoom?>?> { todosRooms -> adapter.setTodos(todosRooms) })
+            Observer<List<TodosRoom?>?> { todosRooms ->
+                adapter.setTodos(todosRooms)
+                listTodos = todosRooms
+            })
 
         actionBtnDel.setOnClickListener {
-            mTodosViewModel.deleteAllTodo()
+
+            //deixar todos os elementos possíveis de exclusão no click e vice versa
+            for (item in listTodos!!) {
+                var del = !item!!.isDel
+                var teste = TodosRoom(item.tarefa, item.desc, item.isDone, del)
+                teste.id = item.id
+                mTodosViewModel.update(teste)
+            }
+
+        }
+
+        actionBtnDel.setOnLongClickListener {
+            val dialog = AlertDialog.Builder(this)
+            dialog.setTitle("Deseja Excluir todas as Atividades?")
+            dialog.setPositiveButton("Sim") { _: DialogInterface, _: Int ->
+                mTodosViewModel.deleteAllTodo()
+                Toast.makeText(this, "Todas as Atividades foram Excluídas", Toast.LENGTH_SHORT)
+                    .show()
+            }
+            dialog.setNegativeButton(R.string.cancelarDialog) { dialogInterface: DialogInterface, i: Int ->
+                Toast.makeText(this, R.string.cancelarToast, Toast.LENGTH_SHORT).show()
+            }
+            dialog.show()
+            true
         }
 
         actionBtnAdd.setOnClickListener {
@@ -50,18 +74,18 @@ class MainActivity : AppCompatActivity(), AdapterTodo.onLongClickListener,
     }
 
     //adicionando tarefa no banco
-    fun insertTask(task: String, desc: String) {
-        var tarefa: String = task
-        var desc: String = desc
-        var done = false
-        var del = false
+    private fun insertTask(task: String, desc: String) {
+        val tarefa: String = task
+        val desc: String = desc
+        val done = false
+        val del = false
 
-        var addTask = TodosRoom(tarefa, desc, done, del)
+        val addTask = TodosRoom(tarefa, desc, done, del)
         mTodosViewModel.insert(addTask)
     }
 
     //chamando dialog para adicionar Tarefa
-    fun dialogAdd() {
+    private fun dialogAdd() {
         val dialog = AlertDialog.Builder(this)
         val view = LayoutInflater.from(this).inflate(R.layout.dialog_add, null)
         dialog.setTitle("Adicionar Tarefa")
@@ -73,12 +97,12 @@ class MainActivity : AppCompatActivity(), AdapterTodo.onLongClickListener,
                 insertTask(tarefa.text.trim().toString(), desc.text.trim().toString())
                 Toast.makeText(this, "Tarefa Criada", Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(this, "Preencha os valores", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.preencherDialog), Toast.LENGTH_LONG).show()
             }
 
         }
-        dialog.setNegativeButton("Cancelar") { dialogInterface: DialogInterface, i: Int ->
-            Toast.makeText(this, "Cancelado", Toast.LENGTH_SHORT).show()
+        dialog.setNegativeButton(getString(R.string.cancelarDialog)) { dialogInterface: DialogInterface, i: Int ->
+            Toast.makeText(this, R.string.cancelarToast, Toast.LENGTH_SHORT).show()
         }
         dialog.show()
     }
@@ -102,22 +126,28 @@ class MainActivity : AppCompatActivity(), AdapterTodo.onLongClickListener,
                 mTodosViewModel.update(teste)
 
             } else {
-                Toast.makeText(this, "Preencha os valores", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.preencherDialog), Toast.LENGTH_LONG).show()
             }
 
         }
-        dialog.setNegativeButton("Cancelar") { dialogInterface: DialogInterface, i: Int ->
-            Toast.makeText(this, "Cancelado", Toast.LENGTH_SHORT).show()
+        dialog.setNegativeButton(R.string.cancelarDialog) { dialogInterface: DialogInterface, i: Int ->
+            Toast.makeText(this, getString(R.string.cancelarToast), Toast.LENGTH_SHORT).show()
         }
         dialog.show()
 
     }
 
-    //função click RecyclerView para deletar o item selecionado
+    //função click RecyclerView para deletar o item selecionado e atualizar check
     override fun onItemClick(item: TodosRoom, position: Int) {
 
-        //item.isDel = true
-        if (item.isDel == true) mTodosViewModel.delete(item)
+        //fazendo update para alterar o icone checked no click, para marcar a tarefa como concluída
+        var newDone = item.isDone
+        var updateCheck = TodosRoom(item.tarefa, item.desc, !newDone, item.isDel)
+        updateCheck.id = item.id
+        mTodosViewModel.update(updateCheck)
+
+        //caso isDel for true, deletar o item selecionado
+        if (item.isDel) mTodosViewModel.delete(item)
 
     }
 
