@@ -148,7 +148,25 @@ class MainActivity : AppCompatActivity(), AdapterTodo.onLongClickListener,
         mTodosViewModel.update(updateCheck)
 
         //caso isDel for true, deletar o item selecionado
-        if (item.isDel) mTodosViewModel.delete(item)
+        if (item.isDel) {
+            //repete o código acima para não mudar o check mp click
+            var newDone = item.isDone
+            var updateCheck = TodosRoom(item.tarefa, item.desc, newDone, item.isDel)
+            updateCheck.id = item.id
+            mTodosViewModel.update(updateCheck)
+            ///////
+            val dialog = AlertDialog.Builder(this)
+            dialog.setTitle("Deseja Excluir a Atividade: ${item.tarefa}?")
+            dialog.setPositiveButton("Sim") { _: DialogInterface, _: Int ->
+                mTodosViewModel.delete(item)
+                Toast.makeText(applicationContext, "Tarefa Excluída", Toast.LENGTH_LONG).show()
+            }
+            dialog.setNegativeButton(R.string.cancelarDialog) { _: DialogInterface, i: Int ->
+                Toast.makeText(this, getString(R.string.cancelarToast), Toast.LENGTH_SHORT).show()
+            }
+            dialog.show()
+
+        }
 
     }
 

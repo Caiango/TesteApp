@@ -47,6 +47,26 @@ public abstract class TodosDatabase extends RoomDatabase {
             todosDao.insert(new TodosRoom("Rooms App", "Finalizar Banco App", false, false));
             todosDao.insert(new TodosRoom("Check e Delete", "Funcionalidades de Check e Delete", false, false));
             todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
+            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
             todosDao.insert(new TodosRoom("Teste", "Apagaar", false, true));
             return null;
         }
