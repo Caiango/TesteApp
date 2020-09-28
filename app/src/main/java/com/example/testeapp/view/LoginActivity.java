@@ -18,6 +18,8 @@ import com.example.testeapp.R;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     TextView myRepo;
     Button login;
+    String github_client_id;
+    String github_app_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +29,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         TextView txGreeting = findViewById(R.id.txGreetings);
         myRepo = findViewById(R.id.txMyRepo);
         login = findViewById(R.id.btnLogin);
-//
-//        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/login/oauth/authorize" + "?client_id=" + getString(R.string.github_app_id) + "&scope=repo&redirect_uri" + getString(R.string.github_app_url)));
-//        startActivity(intent);
+
+        github_client_id = getString(R.string.github_app_id);
+        github_app_url = getString(R.string.github_app_url);
 
         String string = "Olá! Sou " + "<b>" + getString(R.string.myName) + "</b>" + " e esse é meu aplicativo referente ao teste!";
 
@@ -49,7 +51,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             i.setData(Uri.parse(url));
             startActivity(i);
         } else if (view == login) {
-            Toast.makeText(this, "Realizar Login", Toast.LENGTH_SHORT).show();
+//            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//            startActivity(intent);
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/login/oauth/authorize" + "?client_id=" + github_client_id + "&scope=repo&redirect_uri" + github_app_url));
+            startActivity(intent);
         }
     }
 }
