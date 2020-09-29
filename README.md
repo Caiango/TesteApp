@@ -13,7 +13,7 @@ do app e elementos utilizados no mesmo.
 
   - O Aplicatico conta com uma autenticação da sua conta do GitHub para acessar o conteúdo principal do mesmo.
   - A funcionalidade principal é criar um To-Do List de Atividades, onde o usuário pode alterar, criar e excluir como desejar.
-  - Todas as atividades serão salvas no banco de dadps do app, ou seja, o usuário pode sair, desligar, reiniciar o aparelho e mesmo assim tudo estará salvo.
+  - Todas as atividades serão salvas no banco de dados do app, ou seja, o usuário pode sair, desligar, reiniciar o aparelho e mesmo assim tudo estará salvo.
 
 ### Como utilizar
 
