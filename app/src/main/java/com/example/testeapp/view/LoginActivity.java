@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.testeapp.R;
@@ -40,9 +41,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login = findViewById(R.id.btnLogin);
 
         //variáveis que recebem client ID, Client Secret e app url callback
-        github_client_id = getString(R.string.github_app_id);
+        github_client_id = "SEU GITHUB ID";
         github_app_url = getString(R.string.github_app_url);
-        github_client_secret = getString(R.string.github_app_secret);
+        github_client_secret = "SEU GITHUB SECRET";
 
         String string = "Olá! Sou " + "<b>" + getString(R.string.myName) + "</b>" + " e esse é meu aplicativo referente ao teste!";
 
@@ -60,6 +61,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Uri uri = getIntent().getData();
 
         if (uri != null && uri.toString().startsWith(github_app_url)) {
+
             String code = uri.getQueryParameter("code");
 
             Retrofit.Builder builder = new Retrofit.Builder()
@@ -77,15 +79,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             accessTokenCall.enqueue(new Callback<AccessToken>() {
                 @Override
                 public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
-                    Toast.makeText(LoginActivity.this, "Oba!", Toast.LENGTH_SHORT).show();
+
+                    AccessToken accessToken = response.body();
+                    accessToken.getAccessToken();
+                    accessToken.getTokenType();
+
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+
                 }
 
                 @Override
                 public void onFailure(Call<AccessToken> call, Throwable t) {
-                    Toast.makeText(LoginActivity.this, "Não deu certo!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Erro!", Toast.LENGTH_SHORT).show();
                 }
             });
         }
+
     }
 
     @Override
@@ -96,9 +106,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             i.setData(Uri.parse(url));
             startActivity(i);
         } else if (view == login) {
-//            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//            startActivity(intent);
-            //solicitando permissão para acessar github
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/login/oauth/authorize" + "?client_id=" + github_client_id + "&scope=repo&redirect_uri" + github_app_url));
             startActivity(intent);
         }

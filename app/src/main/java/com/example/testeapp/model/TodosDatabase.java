@@ -44,30 +44,26 @@ public abstract class TodosDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            todosDao.insert(new TodosRoom("Rooms App", "Finalizar Banco App", false, false));
-            todosDao.insert(new TodosRoom("Check e Delete", "Funcionalidades de Check e Delete", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Login GitHub", "Implementar Login com o gitHub", false, false));
-            todosDao.insert(new TodosRoom("Teste", "Apagaar", false, true));
+            todosDao.insert(new TodosRoom("Como apagar tudo?", "Dar um click longo no botão da lixeira", false, false));
+            todosDao.insert(new TodosRoom("Como checkar?", "Clique no item que deseja checkar", false, false));
+            todosDao.insert(new TodosRoom("Como apagar um item?", "Clicar no botão da lixeira e selecionar o item a ser removido", false, false));
+            todosDao.insert(new TodosRoom("Como alterar um item?", "Dar um click longo no item a ser alterado", false, false));
+            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
+            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
+            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
+            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
+            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
+            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
+            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
+            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
+            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
+            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
+            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
+            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
+            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
+            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
+            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
+
             return null;
         }
     }

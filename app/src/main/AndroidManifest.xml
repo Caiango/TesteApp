@@ -30,7 +30,7 @@
 
                 <data
                     android:host="callback"
-                    android:scheme="futurestudio" />
+                    android:scheme="testeapp" />
             </intent-filter>
         </activity>
         <activity

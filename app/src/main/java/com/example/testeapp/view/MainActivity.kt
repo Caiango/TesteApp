@@ -4,10 +4,12 @@ package com.example.testeapp.view
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,6 +40,11 @@ class MainActivity : AppCompatActivity(), AdapterTodo.onLongClickListener,
         mTodosViewModel.allTodo.observe(this,
             Observer<List<TodosRoom?>?> { todosRooms ->
                 adapter.setTodos(todosRooms)
+                if (todosRooms.isEmpty()) {
+                    actionBtnDel.visibility = View.INVISIBLE
+                } else {
+                    actionBtnDel.visibility = View.VISIBLE
+                }
                 listTodos = todosRooms
             })
 
