@@ -1,12 +1,14 @@
 <resources>
-    <string name="app_name">TesteTodo</string>
-    <string name="github_app_id">882a906e66a389d74901</string>
-    <string name="github_app_secret">1c7fe93f978ea70c38538897913183add1c8d924</string>
-    <string name="github_app_url">https://testeapp-d23f1.firebaseapp.com/__/auth/handler</string>
+    <string name="app_name">TesteApp</string>
     <string name="alterarDialog">Alterar</string>
     <string name="cancelarDialog">Cancelar</string>
     <string name="cancelarToast">Cancelado</string>
     <string name="preencherDialog">Preencha os valores</string>
     <string name="myName">Caio Valença</string>
 
+<!--    elementos necessários para oauth github-->
+
+    <string name="github_app_id">882a906e66a389d74901</string>
+    <string name="github_app_secret">1c7fe93f978ea70c38538897913183add1c8d924</string>
+    <string name="github_app_url">futurestudio://callback</string>
 </resources>

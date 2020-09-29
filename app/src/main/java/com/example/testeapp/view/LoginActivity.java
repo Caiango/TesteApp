@@ -14,12 +14,21 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.testeapp.R;
+import com.example.testeapp.retrofit.AccessToken;
+import com.example.testeapp.retrofit.GitHubClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     TextView myRepo;
     Button login;
     String github_client_id;
     String github_app_url;
+    String github_client_secret;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +39,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         myRepo = findViewById(R.id.txMyRepo);
         login = findViewById(R.id.btnLogin);
 
+        //variáveis que recebem client ID, Client Secret e app url callback
         github_client_id = getString(R.string.github_app_id);
         github_app_url = getString(R.string.github_app_url);
+        github_client_secret = getString(R.string.github_app_secret);
 
         String string = "Olá! Sou " + "<b>" + getString(R.string.myName) + "</b>" + " e esse é meu aplicativo referente ao teste!";
 
@@ -40,7 +51,41 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         txGreeting.setText(Html.fromHtml(string));
 
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Uri uri = getIntent().getData();
+
+        if (uri != null && uri.toString().startsWith(github_app_url)) {
+            String code = uri.getQueryParameter("code");
+
+            Retrofit.Builder builder = new Retrofit.Builder()
+                    .baseUrl("https://github.com/")
+                    .addConverterFactory(GsonConverterFactory.create());
+
+            Retrofit retrofit = builder.build();
+
+            GitHubClient client = retrofit.create(GitHubClient.class);
+            Call<AccessToken> accessTokenCall = client.getAccessToken(
+                    github_client_id,
+                    github_client_secret, code
+            );
+
+            accessTokenCall.enqueue(new Callback<AccessToken>() {
+                @Override
+                public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
+                    Toast.makeText(LoginActivity.this, "Oba!", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(Call<AccessToken> call, Throwable t) {
+                    Toast.makeText(LoginActivity.this, "Não deu certo!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     @Override
@@ -53,6 +98,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } else if (view == login) {
 //            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 //            startActivity(intent);
+            //solicitando permissão para acessar github
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/login/oauth/authorize" + "?client_id=" + github_client_id + "&scope=repo&redirect_uri" + github_app_url));
             startActivity(intent);
         }
