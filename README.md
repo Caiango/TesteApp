@@ -25,5 +25,9 @@ Abaixo segue um passo a passo de como utilizar o app:
 * Como marcar uma tarefa concluída? - Clicar na tarefa que deseja marcar como concluída.
 * Como remover todas as tarefas? - Dar um click longo no botão da lixeira.
 
+### Autenticação GitHub
+
+- Por favor substituir os valores de github_client_id e  github_client_secret na Login Activity para realizar GitHub Oauth.
+
 
 Espero que gostem da Aplicação, qualquer dúvida e sugestão por favor entrar em contato: cvff12345@gmail.com
