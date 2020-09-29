@@ -1,17 +1,16 @@
 package com.example.testeapp.view;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.testeapp.R;
@@ -42,9 +41,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
         //variáveis que recebem client ID, Client Secret e app url callback
-        github_client_id = "SEU GITHUB CLIENT ID";
+        github_client_id = "882a906e66a389d74901";
         github_app_url = "testeapp://callback";
-        github_client_secret = "SEU GITHUB CLIENT SECRET";
+        github_client_secret = "1c7fe93f978ea70c38538897913183add1c8d924";
 
         String string = "Olá! Sou " + "<b>" + getString(R.string.myName) + "</b>" + " e esse é meu aplicativo referente ao teste!";
 
@@ -94,8 +93,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         accessToken.getAccessToken();
                         accessToken.getTokenType();
 
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
+                        new AlertDialog.Builder(LoginActivity.this)
+                                .setTitle("TOKEN: " + accessToken.getAccessToken())
+                                .setMessage("Vamos ao To-DO?")
+
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                    }
+                                })
+
+                                .setNegativeButton(android.R.string.no, null)
+                                .show();
 
                     }
 
