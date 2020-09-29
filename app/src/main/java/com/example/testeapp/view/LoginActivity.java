@@ -40,10 +40,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         myRepo = findViewById(R.id.txMyRepo);
         login = findViewById(R.id.btnLogin);
 
+
         //variáveis que recebem client ID, Client Secret e app url callback
-        github_client_id = getString(R.string.github_app_id);
-        github_app_url = getString(R.string.github_app_url);
-        github_client_secret = getString(R.string.github_app_secret);
+        github_client_id = "SEU GITHUB CLIENT ID";
+        github_app_url = "testeapp://callback";
+        github_client_secret = "SEU GITHUB CLIENT SECRET";
 
         String string = "Olá! Sou " + "<b>" + getString(R.string.myName) + "</b>" + " e esse é meu aplicativo referente ao teste!";
 
@@ -64,36 +65,46 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             String code = uri.getQueryParameter("code");
 
-            Retrofit.Builder builder = new Retrofit.Builder()
-                    .baseUrl("https://github.com/")
-                    .addConverterFactory(GsonConverterFactory.create());
+            if (code != null) {
 
-            Retrofit retrofit = builder.build();
+                Retrofit.Builder builder = new Retrofit.Builder()
+                        .baseUrl("https://github.com/")
+                        .addConverterFactory(GsonConverterFactory.create());
 
-            GitHubClient client = retrofit.create(GitHubClient.class);
-            Call<AccessToken> accessTokenCall = client.getAccessToken(
-                    github_client_id,
-                    github_client_secret, code
-            );
+                Retrofit retrofit = builder.build();
 
-            accessTokenCall.enqueue(new Callback<AccessToken>() {
-                @Override
-                public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
+                GitHubClient client = retrofit.create(GitHubClient.class);
 
-                    AccessToken accessToken = response.body();
-                    accessToken.getAccessToken();
-                    accessToken.getTokenType();
+                Call<AccessToken> accessTokenCall = client.getAccessToken(
 
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
+                        github_client_id,
+                        github_client_secret,
+                        code
 
-                }
+                );
 
-                @Override
-                public void onFailure(Call<AccessToken> call, Throwable t) {
-                    Toast.makeText(LoginActivity.this, "Erro!", Toast.LENGTH_SHORT).show();
-                }
-            });
+
+                accessTokenCall.enqueue(new Callback<AccessToken>() {
+                    @Override
+                    public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
+
+                        AccessToken accessToken = response.body();
+
+                        //Aqui está o TOKEN!
+                        accessToken.getAccessToken();
+                        accessToken.getTokenType();
+
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<AccessToken> call, Throwable t) {
+                        Toast.makeText(LoginActivity.this, "Erro!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         }
 
     }

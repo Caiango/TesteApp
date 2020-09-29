@@ -6,9 +6,4 @@
     <string name="preencherDialog">Preencha os valores</string>
     <string name="myName">Caio Valença</string>
 
-<!--    elementos necessários para oauth github-->
-
-    <string name="github_app_id">882a906e66a389d74901</string>
-    <string name="github_app_secret">1c7fe93f978ea70c38538897913183add1c8d924</string>
-    <string name="github_app_url">testeapp://callback</string>
 </resources>

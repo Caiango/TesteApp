@@ -53,9 +53,9 @@ class MainActivity : AppCompatActivity(), AdapterTodo.onLongClickListener,
             //deixar todos os elementos possíveis de exclusão no click e vice versa
             for (item in listTodos!!) {
                 var del = !item!!.isDel
-                var teste = TodosRoom(item.tarefa, item.desc, item.isDone, del)
-                teste.id = item.id
-                mTodosViewModel.update(teste)
+                var updt = TodosRoom(item.tarefa, item.desc, item.isDone, del)
+                updt.id = item.id
+                mTodosViewModel.update(updt)
             }
 
         }
@@ -89,7 +89,18 @@ class MainActivity : AppCompatActivity(), AdapterTodo.onLongClickListener,
         val del = false
 
         val addTask = TodosRoom(tarefa, desc, done, del)
+
+        for (item in listTodos!!) {
+            if (item?.isDel == true) {
+                var del = !item!!.isDel
+                var upt = TodosRoom(item.tarefa, item.desc, item.isDone, del)
+                upt.id = item.id
+                mTodosViewModel.update(upt)
+            }
+        }
+
         mTodosViewModel.insert(addTask)
+
     }
 
     //chamando dialog para adicionar Tarefa
@@ -161,7 +172,8 @@ class MainActivity : AppCompatActivity(), AdapterTodo.onLongClickListener,
             var updateCheck = TodosRoom(item.tarefa, item.desc, newDone, item.isDel)
             updateCheck.id = item.id
             mTodosViewModel.update(updateCheck)
-            ///////
+
+
             val dialog = AlertDialog.Builder(this)
             dialog.setTitle("Deseja Excluir a Atividade: ${item.tarefa}?")
             dialog.setPositiveButton("Sim") { _: DialogInterface, _: Int ->

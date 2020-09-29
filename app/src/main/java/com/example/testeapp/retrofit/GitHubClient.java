@@ -14,7 +14,7 @@ public interface GitHubClient {
     Call<AccessToken> getAccessToken(
             @Field("client_id") String clientId,
             @Field("client_secret") String clientSecret,
-            @Field("client_code") String clientCode
+            @Field("code") String clientCode
     );
 
 }

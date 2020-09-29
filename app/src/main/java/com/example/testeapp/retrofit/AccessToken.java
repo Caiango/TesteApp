@@ -9,6 +9,7 @@ public class AccessToken {
     @SerializedName("token_type")
     private String tokenType;
 
+
     public String getAccessToken() {
         return accessToken;
     }

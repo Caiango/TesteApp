@@ -29,7 +29,7 @@ public class TodoRepository {
         new DeleteTodoAsyncTask(todoDao).execute(todo);
     }
 
-    public void deleteAllTodos(){
+    public void deleteAllTodos() {
         new DeleteAllTodoAsyncTask(todoDao).execute();
     }
 
