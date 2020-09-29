@@ -41,9 +41,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
         //variáveis que recebem client ID, Client Secret e app url callback
-        github_client_id = "882a906e66a389d74901";
+        github_client_id = "SEU CLIENT ID";
         github_app_url = "testeapp://callback";
-        github_client_secret = "1c7fe93f978ea70c38538897913183add1c8d924";
+        github_client_secret = "SEU CLIENT SECRET";
 
         String string = "Olá! Sou " + "<b>" + getString(R.string.myName) + "</b>" + " e esse é meu aplicativo referente ao teste!";
 
