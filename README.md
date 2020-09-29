@@ -4,7 +4,7 @@ Olá meus amigos, com grande satisfação eu entrego mais um Android App. Abaixo
 do app e elementos utilizados no mesmo.
 
   - Desenvolvido em Java e Kotlin
-  - Rooms Library
+  - Room Library
   - Retrofit
   - MVVM
   - Autenticação GitHub
@@ -13,7 +13,7 @@ do app e elementos utilizados no mesmo.
 
   - O Aplicatico conta com uma autenticação da sua conta do GitHub para acessar o conteúdo principal do mesmo.
   - A funcionalidade principal é criar um To-Do List de Atividades, onde o usuário pode alterar, criar e excluir como desejar.
-  - Todas as atividades serão salvas na memória do celular, ou seja, o usuário pode sair, desligar, reiniciar o aparelho e mesmo assim tudo estará salvo.
+  - Todas as atividades serão salvas no banco de dadps do app, ou seja, o usuário pode sair, desligar, reiniciar o aparelho e mesmo assim tudo estará salvo.
 
 ### Como utilizar
 
