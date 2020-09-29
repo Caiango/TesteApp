@@ -16,8 +16,8 @@ public abstract class TodosDatabase extends RoomDatabase {
 
     public abstract TodosDao todosDao();
 
-    public static synchronized TodosDatabase getInstance(Context context){
-        if (instance == null){
+    public static synchronized TodosDatabase getInstance(Context context) {
+        if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     TodosDatabase.class, "todos_database")
                     .fallbackToDestructiveMigration()
@@ -27,7 +27,7 @@ public abstract class TodosDatabase extends RoomDatabase {
         return instance;
     }
 
-    private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
+    private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
@@ -38,7 +38,7 @@ public abstract class TodosDatabase extends RoomDatabase {
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
         private TodosDao todosDao;
 
-        private PopulateDbAsyncTask(TodosDatabase db){
+        private PopulateDbAsyncTask(TodosDatabase db) {
             todosDao = db.todosDao();
         }
 
@@ -48,20 +48,6 @@ public abstract class TodosDatabase extends RoomDatabase {
             todosDao.insert(new TodosRoom("Como checkar?", "Clique no item que deseja checkar", false, false));
             todosDao.insert(new TodosRoom("Como apagar um item?", "Clicar no botão da lixeira e selecionar o item a ser removido", false, false));
             todosDao.insert(new TodosRoom("Como alterar um item?", "Dar um click longo no item a ser alterado", false, false));
-            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
-            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
-            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
-            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
-            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
-            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
-            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
-            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
-            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
-            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
-            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
-            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
-            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
-            todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
             todosDao.insert(new TodosRoom("Como criar um item?", "Clicar no botão de + para criar uma nova tarefa", false, false));
 
             return null;
